@@ -1,0 +1,12 @@
+.nav-link {
+  padding-right: .5rem !important;
+  padding-left: .5rem !important;
+  display: inline-block;
+  width: 100%;
+}
+
+
+.menu {
+  display: flex;
+  justify-content: space-between;
+}
