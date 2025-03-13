@@ -1,5 +1,8 @@
 <?php
+
   require_once 'app/Models/model.user.php';
+
+
   function admin() {
     $userManager = new UserManager();
     $users = $userManager->getAll();

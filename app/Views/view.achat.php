@@ -10,18 +10,18 @@ if(!isset($_SESSION['user'])) {
         <thead>
           <tr>
             <th>ID</th>
-            <th>Usager</th>
-            <th>Date</th>
+            <th>Prestation</th>
+            <th>Nombre</th>
           </tr>
         </thead>
         <tbody>
           <?php
-            foreach ($tabTicket as $value) {
+            foreach ($tabAchat as $value) {
               echo '
                 <tr>
-                  <td>'.$value['id'].'</td>
-                  <td>'.$value['usager'].'</td>
-                  <td>'.$value['date_achat'].'</td>
+                  <td>'.$value['id_ticket'].'</td>
+                  <td>'.$value['prestation'].'</td>
+                  <td>'.$value['nombre'].'</td>
                 </tr>
               ';
             }

@@ -9,19 +9,19 @@ if(!isset($_SESSION['user'])) {
       <table class="table">
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Usager</th>
+            <th>ID Carte</th>
             <th>Date</th>
+            <th>Montant</th>
           </tr>
         </thead>
         <tbody>
           <?php
-            foreach ($tabTicket as $value) {
+            foreach ($tabDepot as $value) {
               echo '
                 <tr>
-                  <td>'.$value['id'].'</td>
-                  <td>'.$value['usager'].'</td>
-                  <td>'.$value['date_achat'].'</td>
+                  <td>'.$value['id_carte'].'</td>
+                  <td>'.$value['date_depot'].'</td>
+                  <td>'.$value['montant'].'</td>
                 </tr>
               ';
             }

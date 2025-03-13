@@ -68,7 +68,7 @@
        PDO::PARAM_STR);
       $req->bindValue(':prenom', $user->prenom(),
       PDO::PARAM_STR);
-      $req->bindValue(':mail', $user->mail());
+      $req->bindValue(':mail', $user->mail(), PDO::PARAM_STR);
       $req->bindValue(':password', $user->password(), PDO::PARAM_STR);
       $req->bindValue(':avatar', $user->avatar());
       $req->bindValue(':droits', $user->droits());
@@ -108,15 +108,21 @@
      }
   
      public function update(User $user) {
-      $req = $this->dbConnect()->prepare('UPDATE users SET nom = :nom, prenom = :prenom, mail = :mail, password = :password WHERE id_users = :id');
+      try{
+      $req = $this->dbConnect()->prepare('UPDATE users SET nom = :nom, prenom = :prenom, mail = :mail, password = :password, avatar = :avatar,droits = :droits WHERE id_users = :id');
   
       $req->bindValue(':id', $user->id_users(), PDO::PARAM_INT);
       $req->bindValue(':nom', $user->nom(), PDO::PARAM_STR);
       $req->bindValue(':prenom', $user->prenom(), PDO::PARAM_STR);
       $req->bindValue(':mail', $user->mail());
+      $req->bindValue(':avatar', $user->avatar());
+      $req->bindValue(':droits', $user->droits());
       $req->bindValue(':password', $user->password(), PDO::PARAM_STR);
   
       $req->execute();
+    } catch(PDOException $e){ 
+      die("OUPSI : La modification a échouée. " . $e->getMessage());
+    }
      }
   
   

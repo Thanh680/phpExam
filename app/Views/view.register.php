@@ -2,6 +2,7 @@
 <div class="container-fluid">
   <div class="row justify-content-center">
     <div class="col-4">
+    <h1>Création de compte</h1>
       <form action="index.php?action=register" method="post" enctype="multipart/form-data">
         <div class="form-group">
           <label for="mail">Mail</label><br>
@@ -24,7 +25,7 @@
           <input class="form-control" type="password" id="password" name="password">
         </div>
         <div class="form-group">
-          <label for="verifyPassword">Vérification</label><br>
+          <label for="verifyPassword">Vérification de mot de passe</label><br>
           <input class="form-control" type="password" id="verifyPassword" name="verifyPassword">
         </div>
         <div class="text-center">

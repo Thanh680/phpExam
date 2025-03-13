@@ -1,5 +1,6 @@
 <?php
   session_start();
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -16,7 +17,7 @@
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
     <div class="container-fluid">
       <a href="index.php" class="navbar-brand">
-        Logo
+      <img src=/uploads/Logo.png alt="Logo" width="35" height="25">
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -48,12 +49,22 @@
             </li>
             <li class="nav-item">
               <a href="index.php?action=usager" class="nav-link">
-                Clients
+                Usager
               </a>
             </li>
             <li class="nav-item">
-              <a href="index.php?action=user" class="nav-link">
-                Utilisateurs
+              <a href="index.php?action=achat" class="nav-link">
+                Achat
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="index.php?action=ticket" class="nav-link">
+                Ticket
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="index.php?action=depot" class="nav-link">
+                Depot
               </a>
             </li>
           </ul>
@@ -62,21 +73,31 @@
         ?>
         <span class="clear"></span>
         <ul class="navbar-nav">
+        <?php if (isset($_SESSION['droits'])){ ?>
+        <?php 
+          if ($_SESSION['droits'] == 1){ ?>
+            <li class="nav-item">
+              <a href="index.php?action=admin" class="nav-link">
+              Admin
+              </a>
+            </li>
+          <?php }
+        } ?>
           <?php  if(!isset($_SESSION['user'])) {  ?>
             <li class="nav-item">
               <a href="index.php?action=login" class="nav-link">
-              Login
+              Se connecter
               </a>
             </li>
             <li class="nav-item">
             <a href="index.php?action=register" class="nav-link">
-            Register
+            S'enregistrer
             </a>
             </li>
           <?php  } else {  ?>
             <li class="nav-item">
-              <a href="index.php?action=deco" class="nav-link">
-              Logout
+              <a href="index.php?action=sign-out" class="nav-link">
+              Se déconnecter
               </a>
             </li>
             <li class="nav-item">
@@ -91,6 +112,13 @@
   </nav>
         <?php
             require './app/Controllers/controller.prestation.php';
+            require './app/Controllers/controller.categorie.php';
+            require './app/Controllers/controller.tarif.php';
+            require './app/Controllers/controller.droits.php';
+            require './app/Controllers/controller.usager.php';
+            require './app/Controllers/controller.ticket.php';
+            require './app/Controllers/controller.depot.php';
+            require './app/Controllers/controller.achat.php';
             require './app/Controllers/controller.user.php';
             if(isset($_GET['action'])) {
               $action = $_GET['action'];
@@ -99,16 +127,25 @@
                   presta();
                   break;
                 case 'categorie':
-                  user();
+                  categorie();
                   break;
                 case 'tarif':
-                  user();
+                  tarif();
                   break;
                 case 'droits':
-                  user();
+                  droits();
                   break;
-                 case 'usager':
-                  user();
+                case 'achat':
+                  achat();
+                  break;
+                case 'usager':
+                  usager();
+                  break;
+                case 'depot':
+                  depot();
+                  break;
+                case 'ticket':
+                  ticket();
                   break;
                 case 'user':
                   user();
@@ -116,7 +153,7 @@
                 case 'register':
                   register();
                   break;
-                case 'deco':
+                case 'sign-out':
                   logout();
                   break;
                 case 'login':

@@ -1,19 +1,18 @@
 <?php
   class Tarif {
     private $id_prestation;
-    private $id_tarif;
+    private $id_categorie;
     private $prix;
 
     public function id_prestation() {return $this->id_prestation;}
-    public function id_Tarif() {return $this->id_tarif;}
+    public function id_categorie() {return $this->id_categorie;}
     public function prix() {return $this->prix;}
 
     public function setId_prestation($id) {
       $this->id_prestation = $id;
     }
-
-    public function setId_Tarif($id) {
-      $this->id_tarif = $id;
+    public function setId_categorie($id) {
+      $this->id_categorie = $id;
     }
     public function setPrix($prix) {
       $this->prix = $prix;
@@ -41,10 +40,10 @@
 
     public function add(Tarif $tarif) {
       try{
-        $req = $this->dbConnect()->prepare('INSERT INTO tarif(id_prestation, id_tarif, prix) VALUES(:id_prestation, :id_tarif, :prix)');
-        $req->bindValue(':id_prestation', $tarif->id_prestation());
-        $req->bindValue(':id_tarif', $tarif->id_tarif());
-        $req->bindValue(':prix', $tarif->prix());
+        $req = $this->dbConnect()->prepare('INSERT INTO tarif(id_prestation, id_categorie, prix) VALUES(:id_prestation, :id_categorie, :prix)');
+        $req->bindValue(':id_prestation', $tarif->id_prestation(), PDO::PARAM_INT);
+        $req->bindValue(':id_categorie', $tarif->id_categorie(), PDO::PARAM_INT);
+        $req->bindValue(':prix', $tarif->prix(), PDO::PARAM_STR);
         $req->execute();
       } catch(PDOException $e){
         die("OUPSI : L'ajout a échouée. " . $e->getMessage());
@@ -54,7 +53,7 @@
 
     public function delete(Tarif $tarif) {
       try{
-        $this->dbConnect()->exec('DELETE FROM tarif WHERE id_tarif = '.$tarif->id_tarif().' AND id_prestation = '.$tarif->id_prestation());
+        $this->dbConnect()->exec('DELETE FROM tarif WHERE id_categorie = '.$tarif->id_categorie().' AND id_prestation = '.$tarif->id_prestation());
       } catch(PDOException $e){ 
         die("OUPSI : La suppression a échouée. " . $e->getMessage());
       }
@@ -62,17 +61,17 @@
 
     public function get(Tarif $tarif) {
       try{
-        $req = $this->dbConnect()->prepare('SELECT * FROM tarif WHERE id_tarif = :id_tarif AND id_prestation = :id_prestation');
+        $req = $this->dbConnect()->prepare('SELECT * FROM tarif WHERE id_categorie = :id_categorie AND id_prestation = :id_prestation');
         $req->bindValue(':id_prestation', $tarif->id_prestation(), PDO::PARAM_INT);
-        $req->bindValue(':id_tarif', $tarif->id_tarif(), PDO::PARAM_INT);
+        $req->bindValue(':id_categorie', $tarif->id_categorie(), PDO::PARAM_INT);
         $req->execute();
         $donnees = $req->fetch(PDO::FETCH_ASSOC);
       } catch(PDOException $e){ 
         die("OUPSI : La récupération de donnée a échouée. " . $e->getMessage());
       }
-      $Tarif = new Tarif();
-      $Tarif->hydrate($donnees);
-      return $Tarif;
+      $tarif = new Tarif();
+      $tarif->hydrate($donnees);
+      return $tarif;
     }
 
     public function getAll() {
@@ -93,9 +92,9 @@
 
     public function update(Tarif $tarif) {
       try{
-        $req = $this->dbConnect()->prepare('UPDATE tarif SET prix = :prix WHERE id_tarif = :id_tarif AND id_prestation = :id_prestation');
+        $req = $this->dbConnect()->prepare('UPDATE tarif SET prix = :prix WHERE id_categorie = :id_categorie AND id_prestation = :id_prestation');
 
-        $req->bindValue(':id_tarif', $tarif->id_tarif(), PDO::PARAM_INT);
+        $req->bindValue(':id_categorie', $tarif->id_categorie(), PDO::PARAM_INT);
         $req->bindValue(':id_prestation', $tarif->id_prestation(), PDO::PARAM_INT);
         $req->bindValue(':prix', $tarif->prix(), PDO::PARAM_STR);
         $req->execute();

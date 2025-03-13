@@ -47,7 +47,9 @@
 
     public function delete(Categorie $categorie) {
       try{
-        $this->dbConnect()->exec('DELETE FROM categorie WHERE id_categorie = '.$categorie->id_categorie());
+        $req = $this->dbConnect()->prepare('DELETE FROM categorie WHERE id_categorie = :id_categorie');
+        $req->bindValue(':id_categorie',$categorie->id_categorie(), PDO::PARAM_INT);
+        $req->execute();
       } catch(PDOException $e){ 
         die("OUPSI : La suppression a échouée. " . $e->getMessage());
       }
@@ -71,7 +73,6 @@
       $categories = [];
       try{
         $req = $this->dbConnect()->query('SELECT * FROM categorie');
-
         while($donnees = $req->fetch(PDO::FETCH_ASSOC)) {
           $categorie = new Categorie();
           $categorie->hydrate($donnees);
